@@ -1,6 +1,823 @@
-<h1> I am practising in laptop first time!!!</h1>
-<p>hmm i dont know what to write here :33</p> <br>
-<p>is this good or not????</p> <br>
-<button> good </button> <br>
-<button> not good </button>
-<h4>byeee!!</h4>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NoteHive — Community Study Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0c10;--surface:#111318;--surface2:#181c24;--surface3:#1e2330;
+  --border:#232836;--border2:#2d3444;--accent:#f5c842;--accent-dim:rgba(245,200,66,0.12);
+  --red:#ff5f6d;--red-dim:rgba(208, 82, 93, 0.12);--teal:#43e8d8;
+  --verified:#3b82f6;--owner-col:#f5c842;
+  --text:#e2e6f0;--muted:#5e6878;--muted2:#8896aa;
+  --math:#a78bfa;--science:#34d399;--history:#fb923c;
+  --english:#60a5fa;--physics:#f472b6;--chemistry:#4ade80;--biology:#86efac;--other:#94a3b8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 15% -5%,rgba(245,200,66,0.06) 0%,transparent 55%),radial-gradient(ellipse 50% 40% at 85% 105%,rgba(67,232,216,0.05) 0%,transparent 55%),radial-gradient(ellipse 40% 30% at 50% 50%,rgba(59,130,246,0.03) 0%,transparent 60%);pointer-events:none;z-index:0;}
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px;}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+
+/* AUTH */
+#authScreen{position:fixed;inset:0;background:var(--bg);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;}
+#authScreen::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 30% 20%,rgba(245,200,66,0.08) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 70% 80%,rgba(59,130,246,0.06) 0%,transparent 60%);pointer-events:none;}
+.auth-box{background:var(--surface);border:1px solid var(--border2);border-radius:24px;padding:40px;width:100%;max-width:440px;position:relative;z-index:1;animation:authIn .4s cubic-bezier(.22,1,.36,1);}
+@keyframes authIn{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:none}}
+.auth-logo{display:flex;align-items:center;gap:12px;margin-bottom:28px;}
+.auth-logo-icon{width:46px;height:46px;background:var(--accent);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;}
+.auth-logo-text{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;}
+.auth-logo-text span{color:var(--accent);}
+.auth-tabs{display:flex;background:var(--surface2);border-radius:12px;padding:4px;margin-bottom:26px;}
+.auth-tab{flex:1;padding:9px;border:none;background:transparent;color:var(--muted2);font-family:'DM Sans',sans-serif;font-weight:600;font-size:13px;cursor:pointer;border-radius:9px;transition:all .2s;}
+.auth-tab.active{background:var(--surface3);color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,.3);}
+.auth-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:5px;}
+.auth-sub{font-size:13px;color:var(--muted2);margin-bottom:22px;line-height:1.5;}
+.fg{margin-bottom:15px;}
+.fl{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted2);margin-bottom:6px;}
+.fi{width:100%;padding:12px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;}
+.fi:focus{border-color:var(--accent);}
+.fi::placeholder{color:var(--muted);}
+.fsel{width:100%;padding:12px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;cursor:pointer;}
+.fsel:focus{border-color:var(--accent);}
+.fsel option{background:var(--surface);}
+.fta{width:100%;padding:12px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;min-height:150px;resize:vertical;line-height:1.7;}
+.fta:focus{border-color:var(--accent);}
+.fta::placeholder{color:var(--muted);}
+.auth-err{background:rgba(255,95,109,.1);border:1px solid rgba(255,95,109,.25);color:#ff8a94;border-radius:10px;padding:11px 14px;font-size:13px;margin-bottom:12px;display:none;}
+.auth-err.show{display:block;}
+.btn-auth{width:100%;padding:14px;background:var(--accent);color:#0a0c10;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-weight:700;font-size:15px;cursor:pointer;transition:all .2s;margin-top:4px;}
+.btn-auth:hover{background:#ffd966;box-shadow:0 8px 24px rgba(245,200,66,.3);}
+.auth-switch{text-align:center;margin-top:16px;font-size:13px;color:var(--muted2);}
+.auth-switch a{color:var(--accent);cursor:pointer;font-weight:600;}
+.pw-wrap{position:relative;}
+.pw-wrap .fi{padding-right:44px;}
+.toggle-pw{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted2);font-size:16px;padding:4px;}
+
+/* HEADER */
+header{padding:22px 0 18px;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;background:rgba(10,12,16,0.9);backdrop-filter:blur(16px);}
+.hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.logo{display:flex;align-items:center;gap:12px;cursor:pointer;}
+.logo-icon{width:40px;height:40px;background:var(--accent);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;}
+.logo-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;letter-spacing:-.5px;}
+.logo-name span{color:var(--accent);}
+.logo-sub{font-size:11px;color:var(--muted2);margin-top:1px;}
+.hdr-right{display:flex;align-items:center;gap:10px;}
+.btn{border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:7px;}
+.btn-primary{background:var(--accent);color:#0a0c10;padding:10px 18px;font-size:13px;}
+.btn-primary:hover{background:#ffd966;transform:translateY(-1px);box-shadow:0 8px 24px rgba(245,200,66,.25);}
+.user-pill{display:flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--border2);border-radius:99px;padding:4px 14px 4px 4px;cursor:pointer;transition:all .2s;}
+.user-pill:hover{border-color:var(--accent);}
+.up-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#0a0c10;flex-shrink:0;}
+.up-name{font-size:13px;font-weight:600;line-height:1.2;}
+.up-role{font-size:10px;color:var(--muted2);}
+/* BADGES */
+.badge-owner{display:inline-flex;align-items:center;gap:3px;background:linear-gradient(135deg,rgba(245,200,66,.2),rgba(245,200,66,.08));border:1px solid rgba(245,200,66,.4);color:var(--owner-col);border-radius:99px;padding:1px 7px;font-size:10px;font-weight:700;letter-spacing:.5px;}
+.badge-verified{color:var(--verified);font-size:14px;line-height:1;}
+.badge-chat{display:inline-flex;align-items:center;gap:3px;background:linear-gradient(135deg,rgba(245,200,66,.15),rgba(251,146,60,.1));border:1px solid rgba(245,200,66,.3);color:var(--owner-col);border-radius:99px;padding:1px 8px;font-size:10px;font-weight:700;letter-spacing:.5px;}
+/* ACCT MENU */
+.acct-wrap{position:relative;}
+.acct-menu{position:absolute;top:calc(100% + 8px);right:0;background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:6px;min-width:200px;box-shadow:0 16px 48px rgba(0,0,0,.5);z-index:60;display:none;}
+.acct-menu.open{display:block;animation:fadeUp .15s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.acct-item{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:9px;cursor:pointer;font-size:13px;color:var(--muted2);transition:all .15s;border:none;background:transparent;width:100%;text-align:left;font-family:'DM Sans',sans-serif;}
+.acct-item:hover{background:var(--surface2);color:var(--text);}
+.acct-item.danger{color:var(--red);}
+.acct-item.danger:hover{background:var(--red-dim);}
+.acct-divider{height:1px;background:var(--border);margin:4px 0;}
+/* STATSBAR */
+.statsbar{display:flex;border-bottom:1px solid var(--border);}
+.stat{flex:1;text-align:center;padding:14px 8px;border-right:1px solid var(--border);}
+.stat:last-child{border-right:none;}
+.stat-n{font-family:'DM Mono',monospace;font-size:19px;font-weight:500;color:var(--accent);}
+.stat-l{font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:1px;margin-top:2px;}
+/* LAYOUT */
+.layout{display:grid;grid-template-columns:240px 1fr;gap:28px;padding:26px 0 80px;}
+.sidebar{position:sticky;top:88px;align-self:start;max-height:calc(100vh - 104px);overflow-y:auto;}
+.sb-section{margin-bottom:22px;}
+.sb-label{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);font-weight:600;margin-bottom:10px;padding:0 4px;}
+.search-wrap{position:relative;margin-bottom:18px;}
+.search-ico{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--muted);}
+.search-in{width:100%;padding:10px 12px 10px 32px;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border-color .2s;}
+.search-in:focus{border-color:var(--accent);}
+.search-in::placeholder{color:var(--muted);}
+.sb-btn{display:flex;align-items:center;gap:9px;width:100%;padding:9px 12px;border-radius:8px;background:transparent;border:none;color:var(--muted2);cursor:pointer;transition:all .15s;margin-bottom:3px;font-family:'DM Sans',sans-serif;font-size:13px;text-align:left;}
+.sb-btn:hover{background:var(--surface2);color:var(--text);}
+.sb-btn.active{background:var(--surface2);color:var(--accent);}
+.sb-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.sb-count{margin-left:auto;font-size:10px;font-family:'DM Mono',monospace;background:var(--surface2);padding:2px 6px;border-radius:20px;color:var(--muted);}
+.sb-btn.active .sb-count{background:var(--accent-dim);color:var(--accent);}
+/* NOTES GRID */
+.content-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.content-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;}
+.content-meta{font-size:12px;color:var(--muted2);}
+.notes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;}
+/* NOTE CARD */
+.ncard{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;cursor:pointer;transition:all .22s;position:relative;overflow:hidden;animation:fadeUp .3s ease both;}
+.ncard:hover{border-color:rgba(245,200,66,.25);transform:translateY(-2px);box-shadow:0 14px 36px rgba(0,0,0,.35);}
+.ncard-ribbon{position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0;}
+.ncard-tag{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;}
+.ncard-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;margin-bottom:7px;line-height:1.4;}
+.ncard-preview{font-size:12px;color:var(--muted2);line-height:1.65;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.ncard-footer{margin-top:14px;padding-top:12px;border-top:1px solid var(--border);}
+.ncard-author-row{display:flex;align-items:center;gap:7px;margin-bottom:9px;flex-wrap:wrap;}
+.av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#0a0c10;flex-shrink:0;}
+.av-sm{width:24px;height:24px;font-size:10px;}
+.av-md{width:32px;height:32px;font-size:13px;}
+.av-xl{width:68px;height:68px;font-size:24px;}
+.ncard-aname{font-size:12px;font-weight:600;cursor:pointer;transition:color .15s;}
+.ncard-aname:hover{color:var(--accent);}
+.ncard-date{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;margin-left:auto;}
+.ncard-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.act-btn{display:flex;align-items:center;gap:4px;background:transparent;border:none;color:var(--muted2);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:12px;padding:5px 7px;border-radius:7px;transition:all .15s;}
+.act-btn:hover{background:var(--surface2);}
+.act-btn.liked{color:var(--red);}
+.act-views{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;}
+.follow-btn-sm{background:transparent;border:1px solid var(--border2);color:var(--muted2);padding:4px 10px;border-radius:99px;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;margin-left:auto;}
+.follow-btn-sm.following{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+.follow-btn-sm:hover:not(.following){border-color:var(--text);color:var(--text);}
+/* EMPTY */
+.empty{grid-column:1/-1;text-align:center;padding:56px 20px;color:var(--muted2);}
+.empty-ico{font-size:44px;margin-bottom:14px;}
+.empty h3{font-size:17px;color:var(--text);margin-bottom:6px;}
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .25s;}
+.overlay.open{opacity:1;pointer-events:all;}
+.modal{background:var(--surface);border:1px solid var(--border2);border-radius:20px;width:100%;transition:transform .25s;max-height:92vh;overflow-y:auto;transform:translateY(18px) scale(.97);}
+.overlay.open .modal{transform:none;}
+.modal-hdr{display:flex;align-items:center;justify-content:space-between;padding:22px 22px 0;}
+.modal-title{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;}
+.close-btn{background:var(--surface2);border:none;color:var(--muted2);width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;}
+.close-btn:hover{color:var(--text);background:var(--border2);}
+.modal-body{padding:18px 22px 22px;}
+.btn-submit{width:100%;padding:13px;background:var(--accent);color:#0a0c10;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-weight:700;font-size:14px;cursor:pointer;transition:all .2s;margin-top:6px;}
+.btn-submit:hover{background:#ffd966;box-shadow:0 8px 24px rgba(245,200,66,.3);}
+/* VIEW NOTE */
+.view-modal{max-width:700px;}
+.view-title{font-family:'Playfair Display',serif;font-size:25px;font-weight:900;margin-bottom:12px;line-height:1.3;}
+.view-meta-row{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+.va-name{font-size:14px;font-weight:600;cursor:pointer;transition:color .15s;}
+.va-name:hover{color:var(--accent);}
+.va-date{font-size:11px;color:var(--muted);}
+.view-follow-btn{background:transparent;border:1px solid var(--border2);color:var(--muted2);padding:5px 13px;border-radius:99px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.view-follow-btn.following{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+.view-follow-btn:hover:not(.following){border-color:var(--text);color:var(--text);}
+.view-stats{display:flex;align-items:center;gap:14px;margin-left:auto;flex-wrap:wrap;}
+.vstat{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--muted2);font-family:'DM Mono',monospace;}
+.view-body{font-size:14px;line-height:1.9;color:#bcc5d4;white-space:pre-wrap;margin-bottom:22px;}
+.like-bar{display:flex;align-items:center;gap:10px;padding:12px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:20px;}
+.like-big-btn{display:flex;align-items:center;gap:7px;padding:9px 18px;border-radius:10px;border:1px solid var(--border2);background:transparent;color:var(--muted2);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;}
+.like-big-btn:hover,.like-big-btn.liked{border-color:var(--red);color:var(--red);background:var(--red-dim);}
+.like-big-btn .ico{font-size:17px;transition:transform .2s;}
+.like-big-btn:hover .ico,.like-big-btn.liked .ico{transform:scale(1.2);}
+.view-count-pill{display:flex;align-items:center;gap:6px;padding:7px 13px;background:var(--surface2);border-radius:10px;font-size:12px;color:var(--muted2);font-family:'DM Mono',monospace;margin-left:auto;}
+/* COMMENTS */
+.comments-title{font-size:13px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.comments-title span{background:var(--surface2);border-radius:20px;padding:2px 8px;font-size:11px;color:var(--muted2);font-family:'DM Mono',monospace;}
+.comment-form{display:flex;gap:9px;margin-bottom:18px;}
+.comment-input{flex:1;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border-color .2s;}
+.comment-input:focus{border-color:var(--accent);}
+.comment-input::placeholder{color:var(--muted);}
+.comment-send{padding:10px 15px;background:var(--accent);color:#0a0c10;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-weight:700;font-size:13px;cursor:pointer;transition:all .2s;}
+.comment-send:hover{background:#ffd966;}
+.comment{display:flex;gap:9px;margin-bottom:12px;animation:fadeUp .2s ease;}
+.comment-content{flex:1;background:var(--surface2);border-radius:12px;padding:11px 13px;}
+.comment-top{display:flex;align-items:center;gap:7px;margin-bottom:5px;flex-wrap:wrap;}
+.comment-author{font-size:12px;font-weight:700;cursor:pointer;transition:color .15s;}
+.comment-author:hover{color:var(--accent);}
+.comment-time{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;margin-left:auto;}
+.comment-text{font-size:13px;color:var(--muted2);line-height:1.6;}
+.comment-actions{display:flex;align-items:center;gap:7px;margin-top:7px;flex-wrap:wrap;}
+.comment-like-btn{display:flex;align-items:center;gap:4px;background:transparent;border:none;color:var(--muted);font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;padding:3px 6px;border-radius:6px;transition:all .15s;}
+.comment-like-btn:hover{background:var(--surface3);color:var(--red);}
+.comment-like-btn.liked{color:var(--red);}
+.uploader-heart{display:flex;align-items:center;gap:4px;font-size:11px;padding:2px 8px;border-radius:99px;background:rgba(255,95,109,.1);border:1px solid rgba(255,95,109,.2);color:var(--red);}
+.heart-btn{display:flex;align-items:center;gap:4px;background:transparent;border:1px solid var(--border2);color:var(--muted);font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;padding:2px 8px;border-radius:99px;transition:all .15s;}
+.heart-btn:hover{border-color:var(--red);color:var(--red);}
+/* PROFILE */
+.profile-modal{max-width:660px;}
+.profile-banner{height:90px;border-radius:14px;margin-bottom:-32px;}
+.profile-av-wrap{margin-left:20px;}
+.profile-name-row{display:flex;align-items:flex-end;gap:10px;padding:6px 20px 0;flex-wrap:wrap;}
+.profile-name{font-family:'Playfair Display',serif;font-size:21px;font-weight:900;}
+.profile-badges{display:flex;gap:6px;align-items:center;margin-top:4px;flex-wrap:wrap;}
+.profile-stats{display:flex;gap:20px;padding:12px 20px 0;flex-wrap:wrap;}
+.pstat{text-align:center;}
+.pstat-n{font-family:'DM Mono',monospace;font-size:17px;font-weight:500;color:var(--accent);}
+.pstat-l{font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:1px;}
+.profile-bio{font-size:13px;color:var(--muted2);line-height:1.6;padding:12px 20px 14px;border-bottom:1px solid var(--border);}
+.follow-big-btn{background:transparent;border:1px solid var(--border2);color:var(--muted2);padding:7px 16px;border-radius:99px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;margin-left:auto;}
+.follow-big-btn.following{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+.follow-big-btn:hover:not(.following){border-color:var(--text);color:var(--text);}
+.profile-notes-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted2);padding:14px 20px 12px;border-bottom:1px solid var(--border);}
+.profile-notes{padding:14px 20px 20px;display:flex;flex-direction:column;gap:9px;}
+.pnote{background:var(--surface2);border-radius:10px;padding:12px;cursor:pointer;transition:all .2s;border:1px solid transparent;}
+.pnote:hover{border-color:var(--border2);transform:translateX(4px);}
+.pnote-title{font-size:13px;font-weight:600;margin-bottom:5px;}
+.pnote-meta{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--muted2);font-family:'DM Mono',monospace;}
+.pnote-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;}
+/* OWNER PANEL */
+.owner-modal{max-width:580px;}
+.owner-sec-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted2);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.owner-section{margin-bottom:22px;}
+.user-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surface2);border-radius:10px;margin-bottom:6px;}
+.user-row-name{font-size:13px;font-weight:600;}
+.user-row-email{font-size:11px;color:var(--muted2);margin-top:1px;}
+.user-row-badges{display:flex;gap:5px;margin-top:4px;}
+.verify-btn{padding:6px 12px;border:1px solid var(--border2);background:transparent;color:var(--muted2);border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap;}
+.verify-btn:hover{border-color:var(--verified);color:var(--verified);}
+.unverify-btn{padding:6px 12px;border:1px solid rgba(255,95,109,.3);background:transparent;color:var(--red);border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.unverify-btn:hover{background:var(--red-dim);}
+/* UPLOAD MODAL */
+.upload-who{background:var(--surface2);border-radius:10px;padding:11px 13px;margin-bottom:16px;font-size:13px;color:var(--muted2);}
+.upload-who strong{color:var(--text);}
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;padding:12px 16px;border-radius:12px;font-size:13px;font-weight:500;z-index:999;display:flex;align-items:center;gap:9px;transform:translateY(70px);opacity:0;transition:all .3s;max-width:300px;}
+.toast.show{transform:none;opacity:1;}
+.toast-success{background:#0e2218;border:1px solid #2a5a3a;color:#4ade80;}
+.toast-info{background:#141a28;border:1px solid #2a3650;color:var(--teal);}
+.toast-err{background:#1a0d0d;border:1px solid #4a2020;color:#ff8a94;}
+@media(max-width:768px){.layout{grid-template-columns:1fr;}.sidebar{position:static;}.statsbar{overflow-x:auto;}}
+</style>
+</head>
+<body>
+
+<!-- AUTH SCREEN -->
+<div id="authScreen">
+<div class="auth-box">
+  <div class="auth-logo">
+    <div class="auth-logo-icon">🐝</div>
+    <div>
+      <div class="auth-logo-text">Note<span>Hive</span></div>
+      <div style="font-size:11px;color:var(--muted2);margin-top:1px">Community study notes platform</div>
+    </div>
+  </div>
+  <div class="auth-tabs">
+    <button class="auth-tab active" id="tabLogin" onclick="switchTab('login')">Sign In</button>
+    <button class="auth-tab" id="tabSignup" onclick="switchTab('signup')">Create Account</button>
+  </div>
+  <!-- LOGIN -->
+  <div id="loginForm">
+    <div class="auth-title">Welcome back! 👋</div>
+    <div class="auth-sub">Sign in to upload notes, like, comment &amp; follow.</div>
+    <div class="auth-err" id="loginErr"></div>
+    <div class="fg"><label class="fl">Email</label><input type="email" class="fi" id="loginEmail" placeholder="your@email.com" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <div class="fg"><label class="fl">Password</label>
+      <div class="pw-wrap"><input type="password" class="fi" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"><button class="toggle-pw" onclick="togglePw('loginPass',this)">👁</button></div>
+    </div>
+    <button class="btn-auth" onclick="doLogin()">Sign In →</button>
+    <div class="auth-switch">No account? <a onclick="switchTab('signup')">Create one free</a></div>
+  </div>
+  <!-- SIGNUP -->
+  <div id="signupForm" style="display:none">
+    <div class="auth-title">Join NoteHive 🐝</div>
+    <div class="auth-sub">Create your account and start sharing notes with the community.</div>
+    <div class="auth-err" id="signupErr"></div>
+    <div class="fg"><label class="fl">Full Name</label><input type="text" class="fi" id="signupName" placeholder="e.g. Riya Sharma" maxlength="32"></div>
+    <div class="fg"><label class="fl">Email</label><input type="email" class="fi" id="signupEmail" placeholder="your@email.com"></div>
+    <div class="fg"><label class="fl">Password</label>
+      <div class="pw-wrap"><input type="password" class="fi" id="signupPass" placeholder="min. 6 characters" onkeydown="if(event.key==='Enter')doSignup()"><button class="toggle-pw" onclick="togglePw('signupPass',this)">👁</button></div>
+    </div>
+    <button class="btn-auth" onclick="doSignup()">Create Account →</button>
+    <div class="auth-switch">Have an account? <a onclick="switchTab('login')">Sign in</a></div>
+  </div>
+</div>
+</div>
+
+<!-- APP ROOT -->
+<div id="appRoot" style="display:none">
+<header>
+<div class="wrap">
+<div class="hdr">
+  <div class="logo" onclick="goHome()">
+    <div class="logo-icon">🐝</div>
+    <div><div class="logo-name">Note<span>Hive</span></div><div class="logo-sub">Community study notes — shared, organised, free</div></div>
+  </div>
+  <div class="hdr-right">
+    <button class="btn btn-primary" onclick="openUpload()">＋ Upload Notes</button>
+    <div class="acct-wrap">
+      <div class="user-pill" id="userPill" onclick="toggleAcctMenu()">
+        <div class="av av-sm up-av" id="hdrAv"></div>
+        <div><div class="up-name" id="hdrName"></div><div class="up-role" id="hdrRole"></div></div>
+      </div>
+      <div class="acct-menu" id="acctMenu">
+        <button class="acct-item" onclick="openMyProfile();closeAcctMenu()">👤 My Profile</button>
+        <button class="acct-item" id="ownerBtn" onclick="openOwnerPanel();closeAcctMenu()" style="display:none">👑 Owner Panel</button>
+        <div class="acct-divider"></div>
+        <button class="acct-item danger" onclick="doLogout()">🚪 Sign Out</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</header>
+
+<div class="wrap">
+<div class="statsbar">
+  <div class="stat"><div class="stat-n" id="stTotal">0</div><div class="stat-l">Notes</div></div>
+  <div class="stat"><div class="stat-n" id="stSubjects">0</div><div class="stat-l">Subjects</div></div>
+  <div class="stat"><div class="stat-n" id="stMembers">0</div><div class="stat-l">Members</div></div>
+  <div class="stat"><div class="stat-n" id="stLikes">0</div><div class="stat-l">Total Likes</div></div>
+  <div class="stat"><div class="stat-n" id="stViews">0</div><div class="stat-l">Total Views</div></div>
+</div>
+<div class="layout">
+<aside class="sidebar">
+  <div class="search-wrap"><span class="search-ico">🔍</span><input type="text" class="search-in" placeholder="Search notes…" id="searchIn" oninput="applyFilters()"></div>
+  <div class="sb-section">
+    <div class="sb-label">Browse by Subject</div>
+    <button class="sb-btn active" onclick="filterSubject('all',this)"><span class="sb-dot" style="background:var(--accent)"></span>All Notes<span class="sb-count" id="cnt-all">0</span></button>
+    <button class="sb-btn" onclick="filterSubject('Mathematics',this)"><span class="sb-dot" style="background:var(--math)"></span>Mathematics<span class="sb-count" id="cnt-Mathematics">0</span></button>
+    <button class="sb-btn" onclick="filterSubject('Science',this)"><span class="sb-dot" style="background:var(--science)"></span>Science<span class="sb-count" id="cnt-Science">0</span></button>
+    <button class="sb-btn" onclick="filterSubject('Physics',this)"><span class="sb-dot" style="background:var(--physics)"></span>Physics<span class="sb-count" id="cnt-Physics">0</span></button>
+    <button class="sb-btn" onclick="filterSubject('Chemistry',this)"><span class="sb-dot" style="background:var(--chemistry)"></span>Chemistry<span class="sb-count" id="cnt-Chemistry">0</span></button>
+    <button class="sb-btn" onclick="filterSubject('Biology',this)"><span class="sb-dot" style="background:var(--biology)"></span>Biology<span class="sb-count" id="cnt-Biology">0</span></button>
+    <button class="sb-btn" onclick="filterSubject('History',this)"><span class="sb-dot" style="background:var(--history)"></span>History<span class="sb-count" id="cnt-History">0</span></button>
+    <button class="sb-btn" onclick="filterSubject('English',this)"><span class="sb-dot" style="background:var(--english)"></span>English<span class="sb-count" id="cnt-English">0</span></button>
+    <button class="sb-btn" onclick="filterSubject('Other',this)"><span class="sb-dot" style="background:var(--other)"></span>Other<span class="sb-count" id="cnt-Other">0</span></button>
+  </div>
+</aside>
+<main>
+  <div class="content-hdr"><div class="content-title" id="contentTitle">All Notes</div><div class="content-meta" id="contentMeta">0 notes</div></div>
+  <div class="notes-grid" id="notesGrid"></div>
+</main>
+</div>
+</div>
+
+<!-- UPLOAD MODAL -->
+<div class="overlay" id="uploadOverlay">
+<div class="modal" style="max-width:500px">
+  <div class="modal-hdr"><div class="modal-title">🐝 Share Notes</div><button class="close-btn" onclick="closeModal('uploadOverlay')">✕</button></div>
+  <div class="modal-body">
+    <div class="upload-who">Uploading as <strong id="uploadAsName"></strong></div>
+    <div class="fg"><label class="fl">Subject *</label>
+      <select class="fsel" id="upSubject"><option value="">— Select —</option><option>Mathematics</option><option>Science</option><option>Physics</option><option>Chemistry</option><option>Biology</option><option>History</option><option>English</option><option>Other</option></select>
+    </div>
+    <div class="fg"><label class="fl">Note Title *</label><input type="text" class="fi" id="upTitle" placeholder="e.g. Chapter 5 — Newton's Laws"></div>
+    <div class="fg"><label class="fl">Your Notes *</label><textarea class="fta" id="upBody" placeholder="Write or paste your notes here…"></textarea></div>
+    <button class="btn-submit" onclick="submitNote()">🐝 Publish Notes</button>
+  </div>
+</div>
+</div>
+<h1 Hiiii
+<!-- VIEW NOTE MODAL -->
+<div class="overlay" id="viewOverlay">
+<div class="modal view-modal">
+  <div class="modal-hdr"><div></div><button class="close-btn" onclick="closeModal('viewOverlay')">✕</button></div>
+  <div class="modal-body" id="viewBody"></div>
+</div>
+</div>
+
+<!-- PROFILE MODAL -->
+<div class="overlay" id="profileOverlay">
+<div class="modal profile-modal">
+  <div style="padding:0">
+    <div class="profile-banner" id="profileBanner"></div>
+    <div class="profile-av-wrap"><div class="av av-xl" id="profileAv" style="border:4px solid var(--surface)"></div></div>
+  </div>
+  <div class="profile-name-row">
+    <div><div class="profile-name" id="profileName"></div><div class="profile-badges" id="profileBadges"></div></div>
+    <button class="follow-big-btn" id="profileFollowBtn" onclick="toggleFollowProfile()"></button>
+    <button class="close-btn" onclick="closeModal('profileOverlay')" style="margin-left:6px">✕</button>
+  </div>
+  <div class="profile-stats" id="profileStats"></div>
+  <div class="profile-bio" id="profileBio"></div>
+  <div class="profile-notes-title">📚 Notes by this author</div>
+  <div class="profile-notes" id="profileNotes"></div>
+</div>
+</div>
+
+<!-- OWNER PANEL MODAL -->
+<div class="overlay" id="ownerOverlay">
+<div class="modal owner-modal">
+  <div class="modal-hdr">
+    <div><div class="modal-title">👑 Owner Panel</div><div style="font-size:11px;color:var(--muted2);margin-top:3px">Manage verification for NoteHive members</div></div>
+    <button class="close-btn" onclick="closeModal('ownerOverlay')">✕</button>
+  </div>
+  <div class="modal-body">
+    <div class="owner-section"><div class="owner-sec-title"><span>✅</span> Already Verified</div><div id="ownerVerifiedList"></div></div>
+    <div class="owner-section"><div class="owner-sec-title"><span>👥</span> Other Members</div><div id="ownerOtherList"></div></div>
+  </div>
+</div>
+</div>
+
+<!-- TOASTS -->
+<div class="toast toast-success" id="toast1"></div>
+<div class="toast toast-info" id="toast2"></div>
+<div class="toast toast-err" id="toast3"></div>
+
+</div><!-- /appRoot -->
+
+<script>
+// ══════════════════════════════════════
+// CONSTANTS & STATE
+// ══════════════════════════════════════
+const OWNER_EMAIL='kd033212@gmail.com';
+const SC={Mathematics:'#a78bfa',Science:'#34d399',Physics:'#f472b6',Chemistry:'#4ade80',Biology:'#86efac',History:'#fb923c',English:'#60a5fa',Other:'#94a3b8'};
+const AVC=['#f5c842','#ff6b6b','#43e8d8','#a78bfa','#fb923c','#60a5fa','#f472b6','#34d399','#fbbf24','#38bdf8'];
+const BGS=['linear-gradient(135deg,#1a1060,#2d1b4e)','linear-gradient(135deg,#0d2020,#0d3030)','linear-gradient(135deg,#1a0a00,#3a1500)','linear-gradient(135deg,#0a1525,#0d2540)','linear-gradient(135deg,#1a0020,#2d0040)'];
+
+let DB=loadDB();
+let me=JSON.parse(localStorage.getItem('nh3_sess')||'null');
+let curFilter='all',curSearch='',viewNoteId=null,viewProfileEmail=null;
+
+function loadDB(){
+  const d=JSON.parse(localStorage.getItem('nh3_db')||'null');
+  return d||{users:{},verified:[],notes:[],comments:{},likes:{},clikes:{},uhearts:{},follows:{},views:{}};
+}
+function saveDB(){localStorage.setItem('nh3_db',JSON.stringify(DB));}
+function saveSess(){localStorage.setItem('nh3_sess',JSON.stringify(me));}
+
+// SEED
+
+
+// ══════════════════════════════════════
+// HELPERS
+// ══════════════════════════════════════
+const ini=n=>(n||'?').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+const avc=e=>{let h=0;for(let c of(e||''))h=(h*31+c.charCodeAt(0))%AVC.length;return AVC[h];};
+const bgc=e=>{let h=0;for(let c of(e||''))h=(h*31+c.charCodeAt(0))%BGS.length;return BGS[h];};
+const fmt=d=>new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+const fmtn=n=>n>=1000?(n/1000).toFixed(1)+'k':String(n);
+const now=()=>new Date().toISOString().slice(0,10);
+const uid=()=>'x'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const uname=e=>DB.users[e]?DB.users[e].name:e;
+const isOwner=e=>e===OWNER_EMAIL;
+const isVerified=e=>DB.verified.includes(e)||isOwner(e);
+
+function badgesHtml(email){
+  if(isOwner(email))return`<span class="badge-owner">👑 Owner</span><span class="badge-chat">💬 Chat</span>`;
+  if(isVerified(email))return`<span class="badge-verified" title="Verified Member">✅</span>`;
+  return'';
+}
+
+function toast(msg,n='1',t='success'){
+  const el=document.getElementById('toast'+n);
+  el.className='toast toast-'+t;el.textContent=msg;el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),3000);
+}
+function openOverlay(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+['uploadOverlay','viewOverlay','profileOverlay','ownerOverlay'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(el)el.addEventListener('click',function(e){if(e.target===this)closeModal(id);});
+});
+function togglePw(id,btn){const el=document.getElementById(id);el.type=el.type==='password'?'text':'password';btn.textContent=el.type==='password'?'👁':'🙈';}
+
+// ══════════════════════════════════════
+// AUTH
+// ══════════════════════════════════════
+function switchTab(t){
+  document.getElementById('tabLogin').classList.toggle('active',t==='login');
+  document.getElementById('tabSignup').classList.toggle('active',t==='signup');
+  document.getElementById('loginForm').style.display=t==='login'?'':'none';
+  document.getElementById('signupForm').style.display=t==='signup'?'':'none';
+}
+function showErr(id,msg){const el=document.getElementById(id);el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),4000);}
+
+function doLogin(){
+  const email=document.getElementById('loginEmail').value.trim().toLowerCase();
+  const pw=document.getElementById('loginPass').value;
+  if(!email||!pw){showErr('loginErr','Please fill in all fields.');return;}
+  const u=DB.users[email];
+  if(!u){showErr('loginErr','No account found with this email.');return;}
+  if(u.pw!==pw){showErr('loginErr','Incorrect password.');return;}
+  me={email,name:u.name};saveSess();bootApp();
+}
+function doSignup(){
+  const name=document.getElementById('signupName').value.trim();
+  const email=document.getElementById('signupEmail').value.trim().toLowerCase();
+  const pw=document.getElementById('signupPass').value;
+  if(!name||!email||!pw){showErr('signupErr','Please fill in all fields.');return;}
+  if(!/^[^@]+@[^@]+\.[^@]+$/.test(email)){showErr('signupErr','Enter a valid email address.');return;}
+  if(pw.length<6){showErr('signupErr','Password must be at least 6 characters.');return;}
+  if(DB.users[email]){showErr('signupErr','An account with this email already exists.');return;}
+  DB.users[email]={name,email,pw,joined:now()};
+  if(!DB.follows[email])DB.follows[email]=[];
+  saveDB();
+  me={email,name};saveSess();
+  bootApp();
+  toast('🐝 Welcome to NoteHive, '+name+'!','1','success');
+}
+function doLogout(){
+  me=null;localStorage.removeItem('nh3_sess');
+  document.getElementById('appRoot').style.display='none';
+  document.getElementById('authScreen').style.display='flex';
+  closeAcctMenu();
+}
+function bootApp(){
+  document.getElementById('authScreen').style.display='none';
+  document.getElementById('appRoot').style.display='block';
+  updateHeader();updateStats();renderGrid();
+}
+function updateHeader(){
+  if(!me)return;
+  const av=document.getElementById('hdrAv');
+  av.textContent=ini(me.name);av.style.background=avc(me.email);
+  document.getElementById('hdrName').textContent=me.name;
+  let role='Member';
+  if(isOwner(me.email))role='👑 Owner';
+  else if(isVerified(me.email))role='✅ Verified';
+  document.getElementById('hdrRole').textContent=role;
+  document.getElementById('ownerBtn').style.display=isOwner(me.email)?'':'none';
+}
+function toggleAcctMenu(){document.getElementById('acctMenu').classList.toggle('open');}
+function closeAcctMenu(){document.getElementById('acctMenu').classList.remove('open');}
+document.addEventListener('click',e=>{if(!e.target.closest('.acct-wrap'))closeAcctMenu();});
+
+// ══════════════════════════════════════
+// STATS
+// ══════════════════════════════════════
+function updateStats(){
+  const n=DB.notes;
+  document.getElementById('stTotal').textContent=fmtn(n.length);
+  document.getElementById('stSubjects').textContent=new Set(n.map(x=>x.subject)).size;
+  document.getElementById('stMembers').textContent=Object.keys(DB.users).length;
+  document.getElementById('stLikes').textContent=fmtn(Object.values(DB.likes).reduce((a,b)=>a+(b||[]).length,0));
+  document.getElementById('stViews').textContent=fmtn(Object.values(DB.views).reduce((a,b)=>a+b,0));
+  const subs=['Mathematics','Science','Physics','Chemistry','Biology','History','English','Other'];
+  document.getElementById('cnt-all').textContent=n.length;
+  subs.forEach(s=>{const el=document.getElementById('cnt-'+s);if(el)el.textContent=n.filter(x=>x.subject===s).length;});
+}
+
+// ══════════════════════════════════════
+// GRID
+// ══════════════════════════════════════
+function applyFilters(){curSearch=document.getElementById('searchIn').value;renderGrid();}
+function filterSubject(s,btn){curFilter=s;document.querySelectorAll('.sb-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('contentTitle').textContent=s==='all'?'All Notes':s;applyFilters();}
+function goHome(){curFilter='all';curSearch='';document.getElementById('searchIn').value='';document.querySelectorAll('.sb-btn')[0].click();}
+
+function renderGrid(){
+  let list=[...DB.notes].reverse();
+  if(curFilter!=='all')list=list.filter(n=>n.subject===curFilter);
+  if(curSearch.trim()){const q=curSearch.toLowerCase();list=list.filter(n=>n.title.toLowerCase().includes(q)||n.body.toLowerCase().includes(q)||uname(n.ae).toLowerCase().includes(q)||n.subject.toLowerCase().includes(q));}
+  document.getElementById('contentMeta').textContent=list.length+' note'+(list.length!==1?'s':'');
+  const grid=document.getElementById('notesGrid');
+  if(!list.length){grid.innerHTML='<div class="empty"><div class="empty-ico">🔍</div><h3>No notes found</h3><p>Try another subject or search term.</p></div>';return;}
+  grid.innerHTML=list.map((n,i)=>cardHtml(n,i)).join('');
+}
+
+function cardHtml(n,i){
+  const col=SC[n.subject]||'#94a3b8';
+  const name=uname(n.ae);const av=avc(n.ae);
+  const likes=(DB.likes[n.id]||[]).length;const views=DB.views[n.id]||0;const cmts=(DB.comments[n.id]||[]).length;
+  const liked=(DB.likes[n.id]||[]).includes(me?.email);
+  const following=(DB.follows[me?.email]||[]).includes(n.ae);
+  const isSelf=me?.email===n.ae;
+  return`<div class="ncard" style="animation-delay:${i*.05}s" onclick="openNote('${n.id}')">
+    <div class="ncard-ribbon" style="background:${col}"></div>
+    <div class="ncard-tag" style="background:${col}22;color:${col}"><span style="width:5px;height:5px;border-radius:50%;background:${col};display:inline-block"></span>${n.subject}</div>
+    <div class="ncard-title">${n.title}</div>
+    <div class="ncard-preview">${n.body}</div>
+    <div class="ncard-footer">
+      <div class="ncard-author-row">
+        <div class="av av-sm" style="background:${av};cursor:pointer" onclick="event.stopPropagation();openProfile('${n.ae}')">${ini(name)}</div>
+        <span class="ncard-aname" onclick="event.stopPropagation();openProfile('${n.ae}')">${name}</span>
+        ${badgesHtml(n.ae)}
+        <span class="ncard-date">${fmt(n.date)}</span>
+      </div>
+      <div class="ncard-actions">
+        <button class="act-btn${liked?' liked':''}" onclick="event.stopPropagation();quickLike('${n.id}',this)"><span>${liked?'❤️':'🤍'}</span>${fmtn(likes)}</button>
+        <button class="act-btn" onclick="event.stopPropagation();openNote('${n.id}')"><span>💬</span>${fmtn(cmts)}</button>
+        <div class="act-views"><span>👁</span>${fmtn(views)}</div>
+        ${!isSelf?`<button class="follow-btn-sm${following?' following':''}" onclick="event.stopPropagation();quickFollow('${n.ae}',this)">${following?'✓ Following':'+ Follow'}</button>`:''}
+      </div>
+    </div>
+  </div>`;
+}
+
+function quickLike(nid,btn){
+  if(!me)return;
+  if(!DB.likes[nid])DB.likes[nid]=[];
+  const i=DB.likes[nid].indexOf(me.email);
+  i===-1?DB.likes[nid].push(me.email):DB.likes[nid].splice(i,1);
+  saveDB();
+  const liked=DB.likes[nid].includes(me.email);const lk=DB.likes[nid].length;
+  if(btn){btn.className='act-btn'+(liked?' liked':'');btn.innerHTML=`<span>${liked?'❤️':'🤍'}</span>${fmtn(lk)}`;}
+  updateStats();if(viewNoteId===nid)refreshLikeBar();
+}
+function quickFollow(te,btn){
+  if(!me)return;if(me.email===te){toast('You cannot follow yourself 😅','2','info');return;}
+  if(!DB.follows[me.email])DB.follows[me.email]=[];
+  const i=DB.follows[me.email].indexOf(te);
+  i===-1?DB.follows[me.email].push(te):DB.follows[me.email].splice(i,1);
+  saveDB();
+  const isF=DB.follows[me.email].includes(te);
+  if(btn){btn.className='follow-btn-sm'+(isF?' following':'');btn.textContent=isF?'✓ Following':'+ Follow';}
+  toast(isF?`Following ${uname(te)}`:`Unfollowed ${uname(te)}`,isF?'1':'2',isF?'success':'info');
+}
+
+// ══════════════════════════════════════
+// VIEW NOTE
+// ══════════════════════════════════════
+function openNote(id){
+  viewNoteId=id;
+  if(!DB.views[id])DB.views[id]=0;DB.views[id]++;saveDB();updateStats();
+  renderViewBody(id);openOverlay('viewOverlay');
+}
+function renderViewBody(id){
+  const n=DB.notes.find(x=>x.id===id);if(!n)return;
+  const col=SC[n.subject]||'#94a3b8';const name=uname(n.ae);const av=avc(n.ae);
+  const liked=(DB.likes[id]||[]).includes(me?.email);const likes=(DB.likes[id]||[]).length;const views=DB.views[id]||0;
+  const following=(DB.follows[me?.email]||[]).includes(n.ae);const isSelf=me?.email===n.ae;
+  const cmts=DB.comments[id]||[];
+  const cmtHtml=cmts.map(c=>commentHtml(c,n.ae,id)).join('')||'<div style="text-align:center;padding:22px 0;color:var(--muted2);font-size:13px;">No comments yet 💬</div>';
+  document.getElementById('viewBody').innerHTML=`
+    <div style="margin-bottom:10px"><span class="ncard-tag" style="background:${col}22;color:${col}"><span style="width:5px;height:5px;border-radius:50%;background:${col};display:inline-block"></span>${n.subject}</span></div>
+    <div class="view-title">${n.title}</div>
+    <div class="view-meta-row">
+      <div class="av av-md" style="background:${av};cursor:pointer" onclick="openProfile('${n.ae}')">${ini(name)}</div>
+      <div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap"><span class="va-name" onclick="openProfile('${n.ae}')">${name}</span>${badgesHtml(n.ae)}</div>
+        <div class="va-date">${fmt(n.date)}</div>
+      </div>
+      ${!isSelf?`<button class="view-follow-btn${following?' following':''}" id="vfBtn" onclick="vFollow('${n.ae}')">${following?'✓ Following':'+ Follow'}</button>`:''}
+      <div class="view-stats"><div class="vstat">❤️ ${fmtn(likes)}</div><div class="vstat">💬 ${fmtn(cmts.length)}</div><div class="vstat">👁 ${fmtn(views)}</div></div>
+    </div>
+    <div class="view-body">${n.body}</div>
+    <div class="like-bar">
+      <button class="like-big-btn${liked?' liked':''}" id="likeBigBtn" onclick="bigLike('${id}')"><span class="ico">${liked?'❤️':'🤍'}</span><span id="likeBigTxt">${fmtn(likes)} Like${likes!==1?'s':''}</span></button>
+      <div class="view-count-pill">👁 ${fmtn(views)} views</div>
+    </div>
+    <div>
+      <div class="comments-title">Comments <span id="cmtCount">${cmts.length}</span></div>
+      <div class="comment-form">
+        <input class="comment-input" id="cmtIn" placeholder="${me?'Comment as '+me.name+'…':'Login to comment'}" onkeydown="if(event.key==='Enter')postComment('${id}')">
+        <button class="comment-send" onclick="postComment('${id}')">Send</button>
+      </div>
+      <div id="cmtList">${cmtHtml}</div>
+    </div>`;
+}
+function commentHtml(c,uploaderEmail,nid){
+  const name=uname(c.ae);const av=avc(c.ae);
+  const cl=(DB.clikes[c.id]||[]).length;const cLiked=(DB.clikes[c.id]||[]).includes(me?.email);
+  const hearted=DB.uhearts[c.id]||false;const isUp=me?.email===uploaderEmail;
+  return`<div class="comment" id="cm-${c.id}">
+    <div class="av av-sm" style="background:${av};cursor:pointer;margin-top:2px;flex-shrink:0" onclick="openProfile('${c.ae}')">${ini(name)}</div>
+    <div class="comment-content">
+      <div class="comment-top"><span class="comment-author" onclick="openProfile('${c.ae}')">${name}</span>${badgesHtml(c.ae)}<span class="comment-time">${fmt(c.time)}</span></div>
+      <div class="comment-text">${c.text}</div>
+      <div class="comment-actions">
+        <button class="comment-like-btn${cLiked?' liked':''}" onclick="likeComment('${c.id}','${nid}')">${cLiked?'❤️':'🤍'} ${fmtn(cl)}</button>
+        ${hearted?'<div class="uploader-heart">❤️ Loved by author</div>':isUp?`<button class="heart-btn" onclick="heartCmt('${c.id}','${nid}')">🤍 Give Heart</button>`:''}
+      </div>
+    </div>
+  </div>`;
+}
+function bigLike(nid){if(!me)return;quickLike(nid,null);refreshLikeBar();updateStats();renderGrid();}
+function refreshLikeBar(){
+  const id=viewNoteId;if(!id)return;
+  const liked=(DB.likes[id]||[]).includes(me?.email);const likes=(DB.likes[id]||[]).length;
+  const btn=document.getElementById('likeBigBtn');const txt=document.getElementById('likeBigTxt');
+  if(btn){btn.className='like-big-btn'+(liked?' liked':'');btn.querySelector('.ico').textContent=liked?'❤️':'🤍';}
+  if(txt)txt.textContent=fmtn(likes)+' Like'+(likes!==1?'s':'');
+  const vs=document.querySelectorAll('.vstat');if(vs[0])vs[0].textContent='❤️ '+fmtn(likes);
+}
+function vFollow(te){
+  if(!me)return;quickFollow(te,null);
+  const isF=(DB.follows[me.email]||[]).includes(te);
+  const btn=document.getElementById('vfBtn');
+  if(btn){btn.className='view-follow-btn'+(isF?' following':'');btn.textContent=isF?'✓ Following':'+ Follow';}
+  renderGrid();
+}
+function postComment(nid){
+  if(!me)return;
+  const inp=document.getElementById('cmtIn');const txt=inp.value.trim();if(!txt)return;
+  const note=DB.notes.find(x=>x.id===nid);
+  const c={id:uid(),ae:me.email,text:txt,time:now()};
+  if(!DB.comments[nid])DB.comments[nid]=[];
+  DB.comments[nid].push(c);DB.clikes[c.id]=[];DB.uhearts[c.id]=false;
+  saveDB();inp.value='';
+  const list=document.getElementById('cmtList');const cnt=document.getElementById('cmtCount');
+  if(list)list.innerHTML=DB.comments[nid].map(x=>commentHtml(x,note.ae,nid)).join('');
+  if(cnt)cnt.textContent=DB.comments[nid].length;
+  renderGrid();updateStats();
+}
+function likeComment(cid,nid){
+  if(!me)return;
+  if(!DB.clikes[cid])DB.clikes[cid]=[];
+  const i=DB.clikes[cid].indexOf(me.email);i===-1?DB.clikes[cid].push(me.email):DB.clikes[cid].splice(i,1);
+  saveDB();
+  const note=DB.notes.find(x=>x.id===nid);
+  const c=DB.comments[nid].find(x=>x.id===cid);
+  if(c){const el=document.getElementById('cm-'+cid);if(el)el.outerHTML=commentHtml(c,note.ae,nid);}
+}
+function heartCmt(cid,nid){
+  DB.uhearts[cid]=true;saveDB();
+  const note=DB.notes.find(x=>x.id===nid);
+  const c=DB.comments[nid].find(x=>x.id===cid);
+  if(c){const el=document.getElementById('cm-'+cid);if(el)el.outerHTML=commentHtml(c,note.ae,nid);}
+  toast('❤️ You gave a heart to '+uname(c.ae)+'!','1');
+}
+
+// ══════════════════════════════════════
+// PROFILE
+// ══════════════════════════════════════
+function openProfile(email,silent=false){
+  viewProfileEmail=email;
+  const notes=DB.notes.filter(n=>n.ae===email);
+  const name=uname(email);const av=avc(email);const bg=bgc(email);
+  const totalLikes=notes.reduce((a,n)=>a+(DB.likes[n.id]||[]).length,0);
+  const totalViews=notes.reduce((a,n)=>a+(DB.views[n.id]||0),0);
+  const followers=Object.entries(DB.follows).filter(([,v])=>v.includes(email)).length;
+  const following=(DB.follows[email]||[]).length;
+  const isF=(DB.follows[me?.email]||[]).includes(email);
+  const isSelf=me?.email===email;
+  document.getElementById('profileBanner').style.background=bg;
+  document.getElementById('profileAv').textContent=ini(name);
+  document.getElementById('profileAv').style.background=av;
+  document.getElementById('profileName').textContent=name;
+  let bHtml='';
+  if(isOwner(email))bHtml='<span class="badge-owner">👑 Owner</span><span class="badge-chat">💬 Chat</span>';
+  else if(isVerified(email))bHtml='<span class="badge-verified">✅</span><span style="font-size:12px;color:var(--verified)">Verified</span>';
+  document.getElementById('profileBadges').innerHTML=bHtml;
+  document.getElementById('profileStats').innerHTML=`<div class="pstat"><div class="pstat-n">${notes.length}</div><div class="pstat-l">Notes</div></div><div class="pstat"><div class="pstat-n">${fmtn(totalLikes)}</div><div class="pstat-l">Likes</div></div><div class="pstat"><div class="pstat-n">${fmtn(totalViews)}</div><div class="pstat-l">Views</div></div><div class="pstat"><div class="pstat-n">${followers}</div><div class="pstat-l">Followers</div></div><div class="pstat"><div class="pstat-n">${following}</div><div class="pstat-l">Following</div></div>`;
+  document.getElementById('profileBio').textContent=`${name} has shared ${notes.length} note${notes.length!==1?'s':''} across ${new Set(notes.map(n=>n.subject)).size} subject${new Set(notes.map(n=>n.subject)).size!==1?'s':''} with the NoteHive community.`;
+  const fb=document.getElementById('profileFollowBtn');
+  if(isSelf)fb.style.display='none';
+  else{fb.style.display='';fb.className='follow-big-btn'+(isF?' following':'');fb.textContent=isF?'✓ Following':'+ Follow';}
+  document.getElementById('profileNotes').innerHTML=notes.length?[...notes].reverse().map(n=>{
+    const col=SC[n.subject]||'#94a3b8';
+    return`<div class="pnote" onclick="closeModal('profileOverlay');openNote('${n.id}')">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px"><span class="pnote-tag" style="background:${col}22;color:${col}">${n.subject}</span><span style="margin-left:auto;font-size:10px;color:var(--muted);font-family:'DM Mono',monospace">${fmt(n.date)}</span></div>
+      <div class="pnote-title">${n.title}</div>
+      <div class="pnote-meta"><span>❤️ ${fmtn((DB.likes[n.id]||[]).length)}</span><span>👁 ${fmtn(DB.views[n.id]||0)}</span><span>💬 ${(DB.comments[n.id]||[]).length}</span></div>
+    </div>`;
+  }).join(''):'<div style="text-align:center;padding:24px;color:var(--muted2)">No notes uploaded yet.</div>';
+  if(!silent)openOverlay('profileOverlay');
+}
+function openMyProfile(){openProfile(me.email);}
+function toggleFollowProfile(){
+  if(!me||!viewProfileEmail)return;
+  quickFollow(viewProfileEmail,document.getElementById('profileFollowBtn'));
+  openProfile(viewProfileEmail,true);renderGrid();
+}
+
+// ══════════════════════════════════════
+// OWNER PANEL
+// ══════════════════════════════════════
+function openOwnerPanel(){
+  if(!me||!isOwner(me.email)){toast('Access denied.','3','err');return;}
+  renderOwnerPanel();openOverlay('ownerOverlay');
+}
+function renderOwnerPanel(){
+  const all=Object.values(DB.users).filter(u=>u.email!==OWNER_EMAIL);
+  const verified=all.filter(u=>DB.verified.includes(u.email));
+  const other=all.filter(u=>!DB.verified.includes(u.email));
+  const rowHtml=(u,isVer)=>{
+    const av=avc(u.email);const nc=DB.notes.filter(n=>n.ae===u.email).length;
+    return`<div class="user-row">
+      <div class="av av-sm" style="background:${av}">${ini(u.name)}</div>
+      <div style="flex:1">
+        <div class="user-row-name">${u.name}</div>
+        <div class="user-row-email">${u.email} · ${nc} note${nc!==1?'s':''}</div>
+        ${isVer?'<div class="user-row-badges"><span class="badge-verified">✅</span><span style="font-size:11px;color:var(--verified)">Verified</span></div>':''}
+      </div>
+      ${isVer?`<button class="unverify-btn" onclick="doVerify('${u.email}',false)">Remove ✕</button>`:`<button class="verify-btn" onclick="doVerify('${u.email}',true)">✅ Verify</button>`}
+    </div>`;
+  };
+  document.getElementById('ownerVerifiedList').innerHTML=verified.length?verified.map(u=>rowHtml(u,true)).join(''):'<div style="color:var(--muted2);font-size:13px;padding:8px 0">No verified users yet.</div>';
+  document.getElementById('ownerOtherList').innerHTML=other.length?other.map(u=>rowHtml(u,false)).join(''):'<div style="color:var(--muted2);font-size:13px;padding:8px 0">All members are verified!</div>';
+}
+function doVerify(email,doIt){
+  if(doIt){if(!DB.verified.includes(email))DB.verified.push(email);}
+  else{const i=DB.verified.indexOf(email);if(i>-1)DB.verified.splice(i,1);}
+  saveDB();renderOwnerPanel();updateHeader();renderGrid();
+  toast(doIt?`✅ ${uname(email)} is now verified!`:`Removed verification from ${uname(email)}`,'1',doIt?'success':'info');
+}
+
+// ══════════════════════════════════════
+// UPLOAD
+// ══════════════════════════════════════
+function openUpload(){
+  if(!me)return;
+  document.getElementById('uploadAsName').textContent=me.name;
+  openOverlay('uploadOverlay');
+}
+function submitNote(){
+  if(!me)return;
+  const s=document.getElementById('upSubject').value;
+  const t=document.getElementById('upTitle').value.trim();
+  const b=document.getElementById('upBody').value.trim();
+  if(!s||!t||!b){alert('Please fill in all fields.');return;}
+  const n={id:uid(),ae:me.email,subject:s,title:t,body:b,date:now()};
+  DB.notes.push(n);DB.likes[n.id]=[];DB.comments[n.id]=[];DB.views[n.id]=1;
+  saveDB();
+  document.getElementById('upSubject').value='';document.getElementById('upTitle').value='';document.getElementById('upBody').value='';
+  closeModal('uploadOverlay');updateStats();renderGrid();
+  toast('🐝 Notes published successfully','1','success');
+}
+
+// ══════════════════════════════════════
+// BOOT
+// ══════════════════════════════════════
+if(me&&DB.users[me.email]){me.name=DB.users[me.email].name;bootApp();}
+</script>
+</body>
+</html>
+<html lang="en">
+<head>
